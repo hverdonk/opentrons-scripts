@@ -16,8 +16,10 @@ samples = labware.load("corning_96_wellplate_360ul_flat", 8)
 mag_plate = labware.load('usascientific_96_wellplate_2.4ml_deep', 7, share=True)
 
 # Define reagents
+# TODO: a tuberack won't hold enough volume. change this to some kind of trough
 reagents = labware.load('opentrons-tuberack-2ml-eppendorf', 4)
-'''Let Solution I be in A1, Solution II be in B1, N3 buffer in C1, 
+'''6 columns A-F, 4 rows (I think)
+Let Solution I be in A1, Solution II be in B1, N3 buffer in C1, 
 '''
 
 # Define tip racks
@@ -28,20 +30,14 @@ tiprack_2 = labware.load('opentrons-tiprack-300ul', 11)
 magdeck = modules.load('magdeck', 7)
 
 # pipettes
-p50 = instruments.P50_Single(
-    mount='left',
-    tip_racks=[tiprack_1])
-
-p300 = instruments.P300_Single(
+p300 = instruments.P300_Multi(
     mount='right',
-    tip_racks=[tiprack_2])
-
-# pipette = instruments.P300_Multi(mount='right', tip_racks=[tiprack])  just in case
+    tip_racks=[tiprack_1, tiprack_2])
 
 
-# commands
+# Protocol:
 
-# add Solution I/RNase A to each well & resuspend cells
+# add Solution I/RNase A to each well & resuspend cells (24 mL total)
 p300.distribute(
     250,
     reagents.wells('A1'),
@@ -50,9 +46,21 @@ p300.distribute(
     new_tip='always'
 )
 
-# add Solution II to each well
+# add Solution II to each well (24 mL total)
 p300.distribute(
     250,
     reagents.wells('B1'),
     samples
 )
+
+# 5 min incubation at room temperature
+p300.delay(minutes=5)
+
+# add N3 buffer to each well
+p300.distribute(
+    125,
+    reagents.wells('C1'),
+    samples
+)
+
+# End part 1. The user should centrifuge the cells 10 mins, then proceed to step 2
