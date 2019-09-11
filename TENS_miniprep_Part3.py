@@ -12,7 +12,7 @@ metadata = {
 samples = labware.load("corning_96_wellplate_360ul_flat", 5)
 
 # Define reagents
-resuspension_buffer = labware.load('usascientific_12_reservoir_22ml', 2)
+resuspension_buffer = labware.load('agilent_1_reservoir_290ml', 2)
 # TROUGHS MUST BE CALIBRATED BEFORE USE
 
 # Define tip racks
@@ -29,7 +29,7 @@ p300 = instruments.P300_Multi(
 
 # Resuspend pellet in buffer for long-term use/storage
 p300.distribute(30,
-                resuspension_buffer,
+                resuspension_buffer.wells('A1'),
                 samples,
                 pipette_after=(5, 15),
                 new_tip='always')

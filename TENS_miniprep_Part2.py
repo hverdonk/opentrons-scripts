@@ -14,11 +14,11 @@ tempdeck = modules.load('tempdeck', 4)
 # Define sample labware
 old_samples = labware.load("corning_96_wellplate_360ul_flat", 3)
 samples = labware.load("corning_96_wellplate_360ul_flat", 5)
-trash = labware.load('axygen_1_reservoir_90ml', 1)
+trash = labware.load('agilent_1_reservoir_290ml', 1)
 
 # Define reagents
-EtOH_100 = labware.load('usascientific_12_reservoir_22ml', 4, share=True)
-EtOH_70 = labware.load('usascientific_12_reservoir_22ml', 2)
+EtOH_100 = labware.load('agilent_1_reservoir_290ml', 4, share=True)
+EtOH_70 = labware.load('agilent_1_reservoir_290ml', 2)
 # TROUGHS MUST BE CALIBRATED BEFORE USE
 
 # Define tip racks
@@ -57,13 +57,13 @@ p300.set_flow_rate(dispense=100)  # in uL/s
 # to avoid contaminating the tips
 for c in range(num_columns):
     p300.pick_up_tip(tiprack_2.columns(c))
-    p300.aspirate(300, EtOH_100)
+    p300.aspirate(300, EtOH_100.wells('A1'))
     p300.dispense(300, samples.columns(c).top())
-    p300.aspirate(300, EtOH_100)
+    p300.aspirate(300, EtOH_100.wells('A1'))
     p300.dispense(300, samples.columns(c).top())
-    p300.aspirate(300, EtOH_100)
+    p300.aspirate(300, EtOH_100.wells('A1'))
     p300.dispense(300, samples.columns(c).top())
-    p300.aspirate(100, EtOH_100)
+    p300.aspirate(100, EtOH_100.wells('A1'))
     p300.dispense(100, samples.columns(c).top())
     p300.drop_tip()
 
@@ -77,21 +77,21 @@ robot.pause()
 for c in range(num_columns):
     p300.pick_up_tip(tiprack_3.columns(c))
     p300.aspirate(300, samples.columns(c).bottom(2))
-    p300.dispense(300, trash)
+    p300.dispense(300, trash.wells('A1'))
     p300.aspirate(300, samples.columns(c).bottom(2))
-    p300.dispense(300, trash)
+    p300.dispense(300, trash.wells('A1'))
     p300.aspirate(300, samples.columns(c).bottom(2))
-    p300.dispense(300, trash)
+    p300.dispense(300, trash.wells('A1'))
     p300.aspirate(100, samples.columns(c).bottom(2))
-    p300.dispense(100, trash)
+    p300.dispense(100, trash.wells('A1'))
     p300.drop_tip()
 
 # Wash with 0.5 mL of 70% EtOH
 for c in range(num_columns):
     p300.pick_up_tip(tiprack_4.columns(c))
-    p300.aspirate(300, EtOH_70)
+    p300.aspirate(300, EtOH_70.wells('A1'))
     p300.dispense(300, samples.columns(c).top())
-    p300.aspirate(200, EtOH_70)
+    p300.aspirate(200, EtOH_70.wells('A1'))
     p300.dispense(200, samples.columns(c).top())
     p300.drop_tip()
 
@@ -102,9 +102,9 @@ robot.pause()
 for c in range(num_columns):
     p300.pick_up_tip(tiprack_5.columns(c))
     p300.aspirate(300, samples.columns(c).bottom(2))
-    p300.dispense(300, trash)
+    p300.dispense(300, trash.wells('A1'))
     p300.aspirate(200, samples.columns(c).bottom(2))
-    p300.dispense(200, trash)
+    p300.dispense(200, trash.wells('A1'))
     p300.drop_tip()
 
 # Spin down plate to find rest of supernatant, then return to robot

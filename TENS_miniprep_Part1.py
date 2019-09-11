@@ -9,13 +9,13 @@ metadata = {
 }
 
 # Define sample labware
-samples = labware.load("corning_96_wellplate_360ul_flat", 5)
-trash = labware.load('axygen_1_reservoir_90ml', 1)
+samples = labware.load("usascientific_96_wellplate_2.4ml_deep", 5)
+trash = labware.load('agilent_1_reservoir_290ml', 1)
 
 # Define reagents
-LB = labware.load('usascientific_12_reservoir_22ml', 9)
-TENS = labware.load('usascientific_12_reservoir_22ml', 4)
-NaAC = labware.load('usascientific_12_reservoir_22ml', 6)
+LB = labware.load('agilent_1_reservoir_290ml', 9)
+TENS = labware.load('agilent_1_reservoir_290ml', 4)
+NaAC = labware.load('agilent_1_reservoir_290ml', 6)
 
 # Define tip racks
 tiprack_1 = labware.load('opentrons-tiprack-300ul', 7)
@@ -53,11 +53,11 @@ for c in range(columns):
     n = full_transfers
     while n > 0:
         p300.aspirate(300, samples.columns(c))
-        p300.dispense(300, trash.top())
+        p300.dispense(300, trash.wells('A1').top())
         n -= 1
     if partial_transfer_volume > 0:
         p300.aspirate(partial_transfer_volume, samples.columns(c))
-        p300.dispense(partial_transfer_volume, trash.top())
+        p300.dispense(partial_transfer_volume, trash.wells('A1').top())
     p300.drop_tip()
 
 # Set dispense rate back to the default
@@ -66,21 +66,21 @@ p300.set_flow_rate(dispense=300)
 
 # Resuspend either in 50 μL of LB or P1 buffer or TE/RNAse
 p300.distribute(50,
-                LB,
+                LB.wells('A1'),
                 samples.columns(c),
                 pipette_after=(10, 300),
                 new_tip='always')
 
 # Add TENS buffer
 p300.distribute(300,
-                TENS,
+                TENS.wells('A1'),
                 samples.columns(c),
                 pipette_after=(10, 300),
                 new_tip='always')
 
 # Add NaAC
 p300.distribute(100,
-                NaAC,
+                NaAC.wells('A1'),
                 samples.columns(c),
                 pipette_after=(10, 300),
                 new_tip='always')
