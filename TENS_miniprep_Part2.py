@@ -16,7 +16,6 @@ trash = labware.load('axygen_1_reservoir_90ml', 1)
 # Define reagents
 EtOH_100 = labware.load('usascientific_12_reservoir_22ml', 4, share='true')
 EtOH_70 = labware.load('usascientific_12_reservoir_22ml', 9)
-resuspension_buffer =
 # TROUGHS MUST BE CALIBRATED BEFORE USE
 
 # Define tip racks
