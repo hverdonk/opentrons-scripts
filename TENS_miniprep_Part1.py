@@ -53,11 +53,11 @@ for c in range(len(samples.columns())):
     n = full_transfers
     while n > 0:
         p300.aspirate(300, samples.columns(c))
-        p300.dispense(300, trash).top()
+        p300.dispense(300, trash.top())
         n -= 1
     if partial_transfer_volume > 0:
         p300.aspirate(partial_transfer_volume, samples.columns(c))
-        p300.dispense(partial_transfer_volume, trash).top()
+        p300.dispense(partial_transfer_volume, trash.top())
     p300.drop_tip()
 
 # Set dispense rate back to the default

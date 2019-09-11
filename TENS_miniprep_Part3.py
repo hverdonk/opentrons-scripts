@@ -30,8 +30,8 @@ p300 = instruments.P300_Multi(
 num_columns = len(samples.columns())
 
 # Resuspend pellet in buffer for long-term use/storage
-for c in range(num_columns):
-    p300.pick_up_tip(tiprack.columns(c))
-    p300.transfer(30, resuspension_buffer, samples, pipette_after=(5, 15))
-    p300.drop_tip()
-
+p300.distribute(30,
+                resuspension_buffer,
+                samples,
+                pipette_after=(5, 15),
+                new_tip='always')
