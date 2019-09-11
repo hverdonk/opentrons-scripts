@@ -10,6 +10,7 @@ metadata = {
 
 # Define sample labware
 samples = labware.load("corning_96_wellplate_360ul_flat", 5)
+final_plate = labware.load("biorad_96_wellplate_200ul_pcr", 3)
 
 # Define reagents
 resuspension_buffer = labware.load('agilent_1_reservoir_290ml', 2)
@@ -26,9 +27,20 @@ p300 = instruments.P300_Multi(
 
 # Protocol:
 
-# Resuspend pellet in buffer for long-term use/storage
-p300.distribute(30,
-                resuspension_buffer.wells('A1'),
-                samples,
-                mix_after=(5, 15),
-                new_tip='always')
+columns = 12
+
+# Resuspend pellet in buffer & transfer to PCR plate
+for c in range(columns):
+    p300.transfer(30,
+                  resuspension_buffer.wells('A1'),
+                  samples.columns(c),
+                  mix_after=(5, 15),
+                  new_tip='never')
+
+    p300.transfer(30,
+                  samples.columns(c),
+                  final_plate.columns(c),
+                  new_tip='always')
+
+
+
