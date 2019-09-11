@@ -27,8 +27,6 @@ p300 = instruments.P300_Multi(
 
 # Protocol:
 
-num_columns = len(samples.columns())
-
 # Resuspend pellet in buffer for long-term use/storage
 p300.distribute(30,
                 resuspension_buffer,

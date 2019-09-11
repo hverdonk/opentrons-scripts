@@ -41,6 +41,7 @@ well_volume = 1200
 
 # Dispense slowly to avoid splashes & contamination
 p300.set_flow_rate(dispense=100)  # in uL/s
+columns = 12
 
 # Find number of transfers per well
 full_transfers = well_volume // 300
@@ -48,7 +49,7 @@ remainder = (well_volume/300) - full_transfers
 partial_transfer_volume = round(300*remainder)
 
 # Discard full supernatant volume in 300 uL increments
-for c in range(len(samples.columns())):
+for c in range(columns):
     p300.pick_up_tip(tiprack_1.columns(c))
     n = full_transfers
     while n > 0:
@@ -65,28 +66,25 @@ p300.set_flow_rate(dispense=300)
 
 
 # Resuspend either in 50 μL of LB or P1 buffer or TE/RNAse
-p300.distribute(
-    50,
-    LB,
-    samples,
-    pipette_after=(10, 300),
-    new_tip='always'
-)
+for c in range(columns):
+    p300.transfer(50,
+                  LB,
+                  samples.columns(c),
+                  pipette_after=(10, 300),
+                  new_tip='always')
 
 # Add TENS buffer
-p300.distribute(
-    300,
-    TENS,
-    samples,
-    pipette_after=(10, 300),
-    new_tip='always'
-)
+for c in range(columns):
+    p300.transfer(300,
+                  TENS,
+                  samples.columns(c),
+                  pipette_after=(10, 300),
+                  new_tip='always')
 
 # Add NaAC
-p300.distribute(
-    100,
-    NaAC,
-    samples,
-    pipette_after=(10, 300),
-    new_tip='always'
-)
+for c in range(columns):
+    p300.transfer(100,
+                  NaAC,
+                  samples.columns(c),
+                  pipette_after=(10, 300),
+                  new_tip='always')
