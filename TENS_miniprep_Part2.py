@@ -36,23 +36,40 @@ p300 = instruments.P300_Multi(
 
 # Protocol:
 
-# Transfer supernatant to a new plate. Tip remains 2 mm from the bottom of the well
-# to avoid disturbing the pellet
-p300.transfer(
-    450,
-    old_samples,
-    samples,
-    new_tip='always'
-).bottom(2)
+num_columns = len(samples.columns())
 
-# Add 1 mL 100% ice cold EtOH
-p300.distribute(
-    1000,
-    EtOH_100,
-    samples,
-    pipette_after=(10, 300),
-    new_tip='always'
-)
+# Dispense slowly to avoid splashes & contamination
+p300.set_flow_rate(dispense=100)  # in uL/s
+
+# Transfer 450 uL supernatant in each well to a new plate. Tip remains 2 mm
+# from the bottom of the well to avoid disturbing the pellet.
+for c in range(num_columns):
+    p300.pick_up_tip(tiprack_1.columns(c))
+    p300.aspirate(300, old_samples.columns(c))
+    p300.dispense(300, samples).bottom(2)
+    p300.aspirate(150, old_samples.columns(c))
+    p300.dispense(150, samples).bottom(2)
+    p300.drop_tip()
+
+
+# Add 1 mL 100% ice cold EtOH to the supernatant
+for c in range(num_columns):
+    p300.pick_up_tip(tiprack_2.columns(c))
+    p300.aspirate(300, EtOH_100.columns(c))
+    p300.dispense(300, samples).top()
+    p300.aspirate(300, EtOH_100.columns(c))
+    p300.dispense(300, samples).top()
+    p300.aspirate(300, EtOH_100.columns(c))
+    p300.dispense(300, samples).top()
+    p300.aspirate(100, EtOH_100.columns(c))
+    p300.dispense(100, samples).top()
+    p300.drop_tip()
+
+# Set dispense rate back to the default
+p300.set_flow_rate(dispense=300)
 
 # Spin down plate, then return to robot
 robot.pause()
+
+# Remove the supernatant
+
