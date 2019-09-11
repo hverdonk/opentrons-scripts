@@ -65,22 +65,33 @@ p300.set_flow_rate(dispense=300)
 
 
 # Resuspend either in 50 μL of LB or P1 buffer or TE/RNAse
-p300.distribute(50,
-                LB.wells('A1'),
-                samples.columns(c),
-                pipette_after=(10, 300),
-                new_tip='always')
+for c in range(columns):
+    p300.transfer(50,
+                  LB.wells('A1'),
+                  samples.columns(c),
+                  pipette_after=(10, 300),
+                  new_tip='always'
+                  )
+
+# p300.distribute(50, LB.wells('A1'), samples, pipette_after=(10, 300), new_tip='always')
 
 # Add TENS buffer
-p300.distribute(300,
-                TENS.wells('A1'),
-                samples.columns(c),
-                pipette_after=(10, 300),
-                new_tip='always')
+for c in range(columns):
+    p300.transfer(300,
+                  TENS.wells('A1'),
+                  samples.columns(c),
+                  pipette_after=(10, 300),
+                  new_tip='always'
+                  )
+
+# p300.distribute(300, TENS.wells('A1'), samples, pipette_after=(10, 300), new_tip='always')
 
 # Add NaAC
-p300.distribute(100,
-                NaAC.wells('A1'),
-                samples.columns(c),
-                pipette_after=(10, 300),
-                new_tip='always')
+for c in range(columns):
+    p300.transfer(100,
+                  NaAC.wells('A1'),
+                  samples.columns(c),
+                  pipette_after=(10, 300),
+                  new_tip='always')
+
+# p300.distribute(100, NaAC.wells('A1'), samples, pipette_after=(10, 300), new_tip='always')

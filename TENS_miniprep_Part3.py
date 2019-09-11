@@ -13,7 +13,6 @@ samples = labware.load("corning_96_wellplate_360ul_flat", 5)
 
 # Define reagents
 resuspension_buffer = labware.load('agilent_1_reservoir_290ml', 2)
-# TROUGHS MUST BE CALIBRATED BEFORE USE
 
 # Define tip racks
 tiprack = labware.load('opentrons-tiprack-300ul', 6)
