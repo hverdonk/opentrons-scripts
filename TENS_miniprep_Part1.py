@@ -1,4 +1,4 @@
-from opentrons import labware, instruments
+from opentrons import labware, instruments, robot
 
 # metadata
 metadata = {
@@ -10,12 +10,12 @@ metadata = {
 
 # Define sample labware
 samples = labware.load("usascientific_96_wellplate_2.4ml_deep", 5)
-trash = labware.load('agilent_1_reservoir_290ml', 1)
+trash = labware.load('agilent_1_reservoir_290ml', 9)
 
 # Define reagents
-LB = labware.load('agilent_1_reservoir_290ml', 9)
-TENS = labware.load('agilent_1_reservoir_290ml', 4)
-NaAC = labware.load('agilent_1_reservoir_290ml', 6)
+LB = labware.load('agilent_1_reservoir_290ml', 4)
+TENS = labware.load('agilent_1_reservoir_290ml', 2)
+NaAC = labware.load('agilent_1_reservoir_290ml', 1)
 
 # Define tip racks
 tiprack_1 = labware.load('opentrons-tiprack-300ul', 7)
@@ -66,6 +66,10 @@ for c in range(columns):
 p300.set_flow_rate(dispense=300)
 
 
+# Pause to empty trash
+robot.pause()
+
+
 # Resuspend either in 50 μL of LB or P1 buffer or TE/RNAse
 for c in range(columns):
     p300.transfer(50,
@@ -75,7 +79,10 @@ for c in range(columns):
                   new_tip='always'
                   )
 
-# p300.distribute(50, LB.wells('A1'), samples, pipette_after=(10, 300), new_tip='always')
+
+# Pause to empty trash
+robot.pause()
+
 
 # Add TENS buffer
 for c in range(columns):
@@ -86,7 +93,10 @@ for c in range(columns):
                   new_tip='always'
                   )
 
-# p300.distribute(300, TENS.wells('A1'), samples, pipette_after=(10, 300), new_tip='always')
+
+# Pause to empty trash
+robot.pause()
+
 
 # Add NaAC
 for c in range(columns):

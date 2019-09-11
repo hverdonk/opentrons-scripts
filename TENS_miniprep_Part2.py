@@ -50,6 +50,9 @@ for c in range(num_columns):
     p300.dispense(150, samples.columns(c))
     p300.drop_tip()
 
+# Pause to empty trash
+robot.pause()
+
 # Dispense slowly to avoid splashes & contamination
 p300.set_flow_rate(dispense=100)  # in uL/s
 
@@ -70,7 +73,7 @@ for c in range(num_columns):
 # Set dispense rate back to the default
 p300.set_flow_rate(dispense=300)
 
-# Spin down plate, then return to robot
+# Spin down plate, then return to robot. Empty trash
 robot.pause()
 
 # Remove the supernatant 2mm from the well bottom to avoid disturbing the pellet
@@ -86,7 +89,10 @@ for c in range(num_columns):
     p300.dispense(100, trash.wells('A1'))
     p300.drop_tip()
 
-# Wash with 0.5 mL of 70% EtOH
+# Pause to empty trash
+robot.pause()
+
+# Wash by first adding 0.5 mL of 70% EtOH
 for c in range(num_columns):
     p300.pick_up_tip(tiprack_4.columns(c))
     p300.aspirate(300, EtOH_70.wells('A1'))
@@ -95,10 +101,10 @@ for c in range(num_columns):
     p300.dispense(200, samples.columns(c).top())
     p300.drop_tip()
 
-# Spin down plate, then return to robot
+# Spin down plate, then return to robot. Empty trash
 robot.pause()
 
-# Remove supernatant 2mm from the well bottom to avoid disturbing the pellet
+# Remove wash liquid 2mm from the well bottom to avoid disturbing the pellet
 for c in range(num_columns):
     p300.pick_up_tip(tiprack_5.columns(c))
     p300.aspirate(300, samples.columns(c).bottom(2))
@@ -107,8 +113,3 @@ for c in range(num_columns):
     p300.dispense(200, trash.wells('A1'))
     p300.drop_tip()
 
-# Spin down plate to find rest of supernatant, then return to robot
-robot.pause()
-
-# Air dry 10 minutes
-p300.delay(minutes=10)
