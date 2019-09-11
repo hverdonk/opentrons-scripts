@@ -54,10 +54,12 @@ for c in range(columns):
     while n > 0:
         p300.aspirate(300, samples.columns(c))
         p300.dispense(300, trash.wells('A1').top())
+        p300.blow_out()
         n -= 1
     if partial_transfer_volume > 0:
         p300.aspirate(partial_transfer_volume, samples.columns(c))
         p300.dispense(partial_transfer_volume, trash.wells('A1').top())
+        p300.blow_out()
     p300.drop_tip()
 
 # Set dispense rate back to the default
@@ -69,7 +71,7 @@ for c in range(columns):
     p300.transfer(50,
                   LB.wells('A1'),
                   samples.columns(c),
-                  pipette_after=(10, 300),
+                  mix_after=(10, 300),
                   new_tip='always'
                   )
 
@@ -80,7 +82,7 @@ for c in range(columns):
     p300.transfer(300,
                   TENS.wells('A1'),
                   samples.columns(c),
-                  pipette_after=(10, 300),
+                  mix_after=(10, 300),
                   new_tip='always'
                   )
 
@@ -91,7 +93,7 @@ for c in range(columns):
     p300.transfer(100,
                   NaAC.wells('A1'),
                   samples.columns(c),
-                  pipette_after=(10, 300),
+                  mix_after=(10, 300),
                   new_tip='always')
 
 # p300.distribute(100, NaAC.wells('A1'), samples, pipette_after=(10, 300), new_tip='always')

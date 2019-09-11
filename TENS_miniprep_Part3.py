@@ -30,5 +30,5 @@ p300 = instruments.P300_Multi(
 p300.distribute(30,
                 resuspension_buffer.wells('A1'),
                 samples,
-                pipette_after=(5, 15),
+                mix_after=(5, 15),
                 new_tip='always')
