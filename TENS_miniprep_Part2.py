@@ -8,14 +8,17 @@ metadata = {
                    "(https://openwetware.org/wiki/Miniprep/TENS_miniprep)",
 }
 
+# Define module
+tempdeck = modules.load('tempdeck', 4)
+
 # Define sample labware
-old_samples = labware.load("corning_96_wellplate_360ul_flat", 6)
+old_samples = labware.load("corning_96_wellplate_360ul_flat", 3)
 samples = labware.load("corning_96_wellplate_360ul_flat", 5)
 trash = labware.load('axygen_1_reservoir_90ml', 1)
 
 # Define reagents
-EtOH_100 = labware.load('usascientific_12_reservoir_22ml', 4, share='true')
-EtOH_70 = labware.load('usascientific_12_reservoir_22ml', 9)
+EtOH_100 = labware.load('usascientific_12_reservoir_22ml', 4, share=True)
+EtOH_70 = labware.load('usascientific_12_reservoir_22ml', 2)
 # TROUGHS MUST BE CALIBRATED BEFORE USE
 
 # Define tip racks
@@ -25,9 +28,6 @@ tiprack_3 = labware.load('opentrons-tiprack-300ul', 8)
 tiprack_4 = labware.load('opentrons-tiprack-300ul', 9)
 tiprack_5 = labware.load('opentrons-tiprack-300ul', 10)
 tiprack_6 = labware.load('opentrons-tiprack-300ul', 11)
-
-# Define module
-tempdeck = modules.load('tempdeck', 4)
 
 
 # pipette
