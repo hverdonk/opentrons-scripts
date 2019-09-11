@@ -2,7 +2,7 @@ from opentrons import labware, instruments, modules, robot
 
 # metadata
 metadata = {
-    'protocolName': 'TENS Plasmid Purification - Part 1',
+    'protocolName': 'TENS Plasmid Purification - Part 2',
     'author': 'Hannah Verdonk <hverdonk@stanford.edu>',
     'description': "Automated plasmid purification using the TENS method "
                    "(https://openwetware.org/wiki/Miniprep/TENS_miniprep)",
