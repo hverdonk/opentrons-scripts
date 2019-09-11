@@ -16,7 +16,6 @@ trash = labware.load('axygen_1_reservoir_90ml', 1)
 LB = labware.load('usascientific_12_reservoir_22ml', 9)
 TENS = labware.load('usascientific_12_reservoir_22ml', 4)
 NaAC = labware.load('usascientific_12_reservoir_22ml', 6)
-# TROUGHS MUST BE CALIBRATED BEFORE USE
 
 # Define tip racks
 tiprack_1 = labware.load('opentrons-tiprack-300ul', 7)
@@ -50,7 +49,7 @@ partial_transfer_volume = round(300*remainder)
 
 # Discard full supernatant volume in 300 uL increments
 for c in range(columns):
-    p300.pick_up_tip(tiprack_1.columns(c))
+    p300.pick_up_tip()
     n = full_transfers
     while n > 0:
         p300.aspirate(300, samples.columns(c))
@@ -66,25 +65,22 @@ p300.set_flow_rate(dispense=300)
 
 
 # Resuspend either in 50 μL of LB or P1 buffer or TE/RNAse
-for c in range(columns):
-    p300.transfer(50,
-                  LB,
-                  samples.columns(c),
-                  pipette_after=(10, 300),
-                  new_tip='always')
+p300.distribute(50,
+                LB,
+                samples.columns(c),
+                pipette_after=(10, 300),
+                new_tip='always')
 
 # Add TENS buffer
-for c in range(columns):
-    p300.transfer(300,
-                  TENS,
-                  samples.columns(c),
-                  pipette_after=(10, 300),
-                  new_tip='always')
+p300.distribute(300,
+                TENS,
+                samples.columns(c),
+                pipette_after=(10, 300),
+                new_tip='always')
 
 # Add NaAC
-for c in range(columns):
-    p300.transfer(100,
-                  NaAC,
-                  samples.columns(c),
-                  pipette_after=(10, 300),
-                  new_tip='always')
+p300.distribute(100,
+                NaAC,
+                samples.columns(c),
+                pipette_after=(10, 300),
+                new_tip='always')
