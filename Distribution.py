@@ -24,17 +24,12 @@ def run(protocol_context):
     plate9 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '9')
 
     # Pipette Setup
-    p300 = protocol_context.load_instrument('p300_multi', 'right', tip_racks=[p300rack])
+    p300 = protocol_context.load_instrument('p300_multi', 'left', tip_racks=[p300rack])
 
-    plate_list_1 = [plate1, plate2, plate3, plate4, plate5, plate6]
-    plate_list_2 = [plate7, plate8, plate9]
+    plate_list = [plate1, plate2, plate3, plate4, plate5, plate6, plate7, plate8, plate9]
 
     # Distribute volume from deep well plate to flat bottom plates, column by column
+    # Only officially take from well 0 in the column, because the multichannel will reach the rest anyway
     for col in master_plate.columns_by_name():
-        p300.pick_up_tip()
-        p300.aspirate(275, master_plate.columns_by_name()[col][0])
-        p300.dispense(45, [plate.columns_by_name()[col][0] for plate in plate_list_1])
-        p300.aspirate(135, master_plate.columns_by_name()[col][0])
-        p300.dispense(45, [plate.columns_by_name()[col][0] for plate in plate_list_2])
-        p300.drop_tip()
-        
+        p300.distribute(45, master_plate.columns_by_name()[col][0],
+                           [plate.columns_by_name()[col][0] for plate in plate_list])
