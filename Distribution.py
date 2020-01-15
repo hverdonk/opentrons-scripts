@@ -11,17 +11,17 @@ metadata = {
 
 def run(protocol_context):
     # Labware Setup
-    tiprack = labware.load('opentrons_96_tiprack_300ul', '11')
-    master_plate = labware.load("usascientific_96_wellplate_2.4ml_deep", '10')
-    plate1 = labware.load("corning_96_wellplate_360ul_flat", '1')
-    plate2 = labware.load("corning_96_wellplate_360ul_flat", '2')
-    plate3 = labware.load("corning_96_wellplate_360ul_flat", '3')
-    plate4 = labware.load("corning_96_wellplate_360ul_flat", '4')
-    plate5 = labware.load("corning_96_wellplate_360ul_flat", '5')
-    plate6 = labware.load("corning_96_wellplate_360ul_flat", '6')
-    plate7 = labware.load("corning_96_wellplate_360ul_flat", '7')
-    plate8 = labware.load("corning_96_wellplate_360ul_flat", '8')
-    plate9 = labware.load("corning_96_wellplate_360ul_flat", '9')
+    tiprack = protocol_context.load_labware('opentrons_96_tiprack_300ul', '11')
+    master_plate = protocol_context.load_labware("usascientific_96_wellplate_2.4ml_deep", '10')
+    plate1 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '1')
+    plate2 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '2')
+    plate3 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '3')
+    plate4 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '4')
+    plate5 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '5')
+    plate6 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '6')
+    plate7 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '7')
+    plate8 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '8')
+    plate9 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '9')
 
     # Pipette Setup
     p300 = protocol_context.load_instrument('p300_multi', 'right', tip_racks=tiprack)
