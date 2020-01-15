@@ -37,10 +37,3 @@ def run(protocol_context):
         p300.aspirate(135, master_plate[col])
         p300.dispense(45, [plate.columns_by_name()[col] for plate in plate_list_2])
         p300.drop_tip()
-
-    # from master_plate, aspirate 275uL from column 1
-    # Dispense 45uL into column 1 of plates 1-6 (270uL total)
-    # from master_plate, aspirate 135uL from column 1 (140uL total)
-    # dispense 45uL into column 1 of plates 7-9 (135uL total)
-    # drop tips
-    # repeat with other columns
