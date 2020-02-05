@@ -13,11 +13,11 @@ json1_str = json1_file.read()
 json1_data = json.loads(json1_str)
 json1_file.close()
 
-print('keys')  # Each key is a new plate to be filled
-print(json1_data.keys())
+#print('keys')  # Each key is a new plate to be filled
+#print(json1_data.keys())
 
-print("values")
-print(len(json1_data['M.gentalium_1']))
+#print("values")
+#print(len(json1_data['M.gentalium_1']))
 
 
 '''
@@ -38,9 +38,11 @@ requires a new tip to avoid contamination.
 
 '''
 moves = 0
- for _ in _:
+for plate in json1_data['M.gentalium_0']:
+    print(plate)
+    moves = moves + len(plate)
 
-
+print("moves = {}".format(moves))
 
 
 def run(protocol_context):
