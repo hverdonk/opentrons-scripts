@@ -1,10 +1,12 @@
 import json
 
-json1_file = open('data.json', 'r')
+json1_file = open('mpneumonia.json', 'r')
 json1_str = json1_file.read()
 json1_data = json.loads(json1_str)
 json1_file.close()
 
+# Uncomment to find new plate names
+print(json1_data.keys())
 
 '''
 Keeping these notes for later code improvements.
@@ -41,6 +43,7 @@ t = open('transfers.txt','w')
 
 # Extract source and destination wells from json, then write them to new file for transfer.
 
+'''
 for plate in json1_data['M.gentalium_1']:
     p_name = "plate_" + plate
     for move in json1_data['M.gentalium_1'][plate]:
@@ -56,4 +59,6 @@ for plate in json1_data['M.gentalium_1']:
         t.write(command)
 
 t.close()
+
+'''
 
