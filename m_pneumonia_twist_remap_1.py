@@ -21,7 +21,6 @@ def run(protocol_context):
     plate_12w = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '8')
 
     # instrument setup
-    p10 = protocol_context.load_instrument('p10_single', 'left', tip_racks=tiprack_10ul)
+    p10 = protocol_context.load_instrument('p10_single', 'left', tip_racks=[tiprack_10ul])
 
     # Do the transfers
-
