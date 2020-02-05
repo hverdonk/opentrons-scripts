@@ -7,40 +7,6 @@ metadata = {
     'author': 'Hannah Verdonk <hverdonk@stanford.edu>',
     'apiLevel': '2.1'}
 
-json1_file = open('data.json', 'r')
-json1_str = json1_file.read()
-json1_data = json.loads(json1_str)
-json1_file.close()
-
-'''
-json1_data is a list of dicts. Each dict has key = old plate name, value = list of dicts 
-governing moves to make.
-json1_data['M.gentalium_1']
-
-take len of this to find out how many plates to take FROM
-len(json1_data['M.gentalium_1'])
-
-8 plates used to build 'M.gentalium_0'
-7 plates used to build 'M.gentalium_1'
-
-Find plate names & the order in which they appear:
-for plate in json1_data['M.gentalium_0']:
-    print(plate)
-
-Calculating # of tips used (aka number of move operations)
-Find the number of dicts per old plate. Each dict is a move, and each move 
-requires a new tip to avoid contamination.
-
-moves = 0
-for plate in json1_data['M.gentalium_0']:
-    moves = moves + len(plate)
-
-print("moves = {}".format(moves))
-
-Creating plate 0 will require 24 tips - one box will suffice.
-'''
-
-
 def run(protocol_context):
     # labware setup
     tiprack_10ul = protocol_context.load_labware('geb_96_tiprack_10ul', '11')
@@ -57,10 +23,103 @@ def run(protocol_context):
     # instrument setup
     p10 = protocol_context.load_instrument('p10_single', 'left', tip_racks=tiprack_10ul)
 
-    # Extract source and destination wells from json, then do the transfer
-    for plate in json1_data['M.gentalium_0']:
-        p_name = "plate_" + plate
-        for move in plate:
-            source_well = move['from']['address']
-            dest_well = move['to']['address']
-            p10.transfer(5, p_name.wells_by_name()[source_well], deepwell.wells_by_name()[dest_well], new_tip='always')
+    # Do the transfers
+    p10.transfer(5, plate_16w.wells_by_name()["H12"], deepwell.wells_by_name()["E8"])
+    p10.transfer(5, plate_16w.wells_by_name()["B11"], deepwell.wells_by_name()["E9"])
+    p10.transfer(5, plate_16w.wells_by_name()["E12"], deepwell.wells_by_name()["E10"])
+    p10.transfer(5, plate_16w.wells_by_name()["B12"], deepwell.wells_by_name()["E11"])
+    p10.transfer(5, plate_16w.wells_by_name()["D10"], deepwell.wells_by_name()["E12"])
+    p10.transfer(5, plate_16w.wells_by_name()["H11"], deepwell.wells_by_name()["F1"])
+    p10.transfer(5, plate_16w.wells_by_name()["B10"], deepwell.wells_by_name()["F2"])
+    p10.transfer(5, plate_16w.wells_by_name()["H9"], deepwell.wells_by_name()["F3"])
+    p10.transfer(5, plate_16w.wells_by_name()["F11"], deepwell.wells_by_name()["F4"])
+    p10.transfer(5, plate_16w.wells_by_name()["C11"], deepwell.wells_by_name()["F5"])
+    p10.transfer(5, plate_16w.wells_by_name()["C12"], deepwell.wells_by_name()["F6"])
+    p10.transfer(5, plate_16w.wells_by_name()["A12"], deepwell.wells_by_name()["F7"])
+    p10.transfer(5, plate_16w.wells_by_name()["A10"], deepwell.wells_by_name()["F8"])
+    p10.transfer(5, plate_16w.wells_by_name()["G9"], deepwell.wells_by_name()["F9"])
+    p10.transfer(5, plate_16w.wells_by_name()["G12"], deepwell.wells_by_name()["F10"])
+    p10.transfer(5, plate_16w.wells_by_name()["F10"], deepwell.wells_by_name()["F11"])
+    p10.transfer(5, plate_16w.wells_by_name()["E11"], deepwell.wells_by_name()["F12"])
+    p10.transfer(5, plate_16w.wells_by_name()["A11"], deepwell.wells_by_name()["G1"])
+    p10.transfer(5, plate_15w.wells_by_name()["D10"], deepwell.wells_by_name()["E2"])
+    p10.transfer(5, plate_15w.wells_by_name()["H10"], deepwell.wells_by_name()["E3"])
+    p10.transfer(5, plate_15w.wells_by_name()["D12"], deepwell.wells_by_name()["E4"])
+    p10.transfer(5, plate_15w.wells_by_name()["H12"], deepwell.wells_by_name()["E5"])
+    p10.transfer(5, plate_15w.wells_by_name()["C12"], deepwell.wells_by_name()["E6"])
+    p10.transfer(5, plate_15w.wells_by_name()["D11"], deepwell.wells_by_name()["E7"])
+    p10.transfer(5, plate_17w.wells_by_name()["C9"], deepwell.wells_by_name()["G2"])
+    p10.transfer(5, plate_17w.wells_by_name()["F10"], deepwell.wells_by_name()["G3"])
+    p10.transfer(5, plate_17w.wells_by_name()["F11"], deepwell.wells_by_name()["G4"])
+    p10.transfer(5, plate_17w.wells_by_name()["E11"], deepwell.wells_by_name()["G5"])
+    p10.transfer(5, plate_17w.wells_by_name()["F9"], deepwell.wells_by_name()["G6"])
+    p10.transfer(5, plate_17w.wells_by_name()["G1"], deepwell.wells_by_name()["G7"])
+    p10.transfer(5, plate_17w.wells_by_name()["A12"], deepwell.wells_by_name()["G8"])
+    p10.transfer(5, plate_17w.wells_by_name()["A10"], deepwell.wells_by_name()["G9"])
+    p10.transfer(5, plate_17w.wells_by_name()["D10"], deepwell.wells_by_name()["G10"])
+    p10.transfer(5, plate_17w.wells_by_name()["D1"], deepwell.wells_by_name()["G11"])
+    p10.transfer(5, plate_17w.wells_by_name()["E12"], deepwell.wells_by_name()["G12"])
+    p10.transfer(5, plate_17w.wells_by_name()["E1"], deepwell.wells_by_name()["H1"])
+    p10.transfer(5, plate_17w.wells_by_name()["G12"], deepwell.wells_by_name()["H2"])
+    p10.transfer(5, plate_17w.wells_by_name()["D11"], deepwell.wells_by_name()["H3"])
+    p10.transfer(5, plate_17w.wells_by_name()["F12"], deepwell.wells_by_name()["H4"])
+    p10.transfer(5, plate_17w.wells_by_name()["H1"], deepwell.wells_by_name()["H5"])
+    p10.transfer(5, plate_17w.wells_by_name()["C11"], deepwell.wells_by_name()["H6"])
+    p10.transfer(5, plate_17w.wells_by_name()["B11"], deepwell.wells_by_name()["H7"])
+    p10.transfer(5, plate_17w.wells_by_name()["D12"], deepwell.wells_by_name()["H8"])
+    p10.transfer(5, plate_18w.wells_by_name()["F1"], deepwell.wells_by_name()["H9"])
+    p10.transfer(5, plate_18w.wells_by_name()["F12"], deepwell.wells_by_name()["H10"])
+    p10.transfer(5, plate_18w.wells_by_name()["H12"], deepwell.wells_by_name()["H11"])
+    p10.transfer(5, plate_18w.wells_by_name()["B12"], deepwell.wells_by_name()["H12"])
+    p10.transfer(5, plate_14w.wells_by_name()["E12"], deepwell.wells_by_name()["D10"])
+    p10.transfer(5, plate_14w.wells_by_name()["B12"], deepwell.wells_by_name()["D11"])
+    p10.transfer(5, plate_14w.wells_by_name()["A12"], deepwell.wells_by_name()["D12"])
+    p10.transfer(5, plate_14w.wells_by_name()["G12"], deepwell.wells_by_name()["E1"])
+    p10.transfer(5, plate_13w.wells_by_name()["C2"], deepwell.wells_by_name()["C3"])
+    p10.transfer(5, plate_13w.wells_by_name()["E12"], deepwell.wells_by_name()["C4"])
+    p10.transfer(5, plate_13w.wells_by_name()["B12"], deepwell.wells_by_name()["C5"])
+    p10.transfer(5, plate_13w.wells_by_name()["F11"], deepwell.wells_by_name()["C6"])
+    p10.transfer(5, plate_13w.wells_by_name()["E11"], deepwell.wells_by_name()["C7"])
+    p10.transfer(5, plate_13w.wells_by_name()["G11"], deepwell.wells_by_name()["C8"])
+    p10.transfer(5, plate_13w.wells_by_name()["E6"], deepwell.wells_by_name()["C9"])
+    p10.transfer(5, plate_13w.wells_by_name()["B11"], deepwell.wells_by_name()["C10"])
+    p10.transfer(5, plate_13w.wells_by_name()["F12"], deepwell.wells_by_name()["C11"])
+    p10.transfer(5, plate_13w.wells_by_name()["D12"], deepwell.wells_by_name()["C12"])
+    p10.transfer(5, plate_13w.wells_by_name()["A12"], deepwell.wells_by_name()["D1"])
+    p10.transfer(5, plate_13w.wells_by_name()["F10"], deepwell.wells_by_name()["D2"])
+    p10.transfer(5, plate_13w.wells_by_name()["D2"], deepwell.wells_by_name()["D3"])
+    p10.transfer(5, plate_13w.wells_by_name()["D10"], deepwell.wells_by_name()["D4"])
+    p10.transfer(5, plate_13w.wells_by_name()["G10"], deepwell.wells_by_name()["D5"])
+    p10.transfer(5, plate_13w.wells_by_name()["D11"], deepwell.wells_by_name()["D6"])
+    p10.transfer(5, plate_13w.wells_by_name()["C11"], deepwell.wells_by_name()["D7"])
+    p10.transfer(5, plate_13w.wells_by_name()["G12"], deepwell.wells_by_name()["D8"])
+    p10.transfer(5, plate_13w.wells_by_name()["E10"], deepwell.wells_by_name()["D9"])
+    p10.transfer(5, plate_11w.wells_by_name()["H3"], deepwell.wells_by_name()["A1"])
+    p10.transfer(5, plate_12w.wells_by_name()["C12"], deepwell.wells_by_name()["A2"])
+    p10.transfer(5, plate_12w.wells_by_name()["B12"], deepwell.wells_by_name()["A3"])
+    p10.transfer(5, plate_12w.wells_by_name()["D12"], deepwell.wells_by_name()["A4"])
+    p10.transfer(5, plate_12w.wells_by_name()["H9"], deepwell.wells_by_name()["A5"])
+    p10.transfer(5, plate_12w.wells_by_name()["F10"], deepwell.wells_by_name()["A6"])
+    p10.transfer(5, plate_12w.wells_by_name()["F11"], deepwell.wells_by_name()["A7"])
+    p10.transfer(5, plate_12w.wells_by_name()["D4"], deepwell.wells_by_name()["A8"])
+    p10.transfer(5, plate_12w.wells_by_name()["A10"], deepwell.wells_by_name()["A9"])
+    p10.transfer(5, plate_12w.wells_by_name()["E12"], deepwell.wells_by_name()["A10"])
+    p10.transfer(5, plate_12w.wells_by_name()["E4"], deepwell.wells_by_name()["A11"])
+    p10.transfer(5, plate_12w.wells_by_name()["F12"], deepwell.wells_by_name()["A12"])
+    p10.transfer(5, plate_12w.wells_by_name()["B11"], deepwell.wells_by_name()["B1"])
+    p10.transfer(5, plate_12w.wells_by_name()["F9"], deepwell.wells_by_name()["B2"])
+    p10.transfer(5, plate_12w.wells_by_name()["B10"], deepwell.wells_by_name()["B3"])
+    p10.transfer(5, plate_12w.wells_by_name()["C10"], deepwell.wells_by_name()["B4"])
+    p10.transfer(5, plate_12w.wells_by_name()["H12"], deepwell.wells_by_name()["B5"])
+    p10.transfer(5, plate_12w.wells_by_name()["A12"], deepwell.wells_by_name()["B6"])
+    p10.transfer(5, plate_12w.wells_by_name()["G9"], deepwell.wells_by_name()["B7"])
+    p10.transfer(5, plate_12w.wells_by_name()["A1"], deepwell.wells_by_name()["B8"])
+    p10.transfer(5, plate_12w.wells_by_name()["E10"], deepwell.wells_by_name()["B9"])
+    p10.transfer(5, plate_12w.wells_by_name()["H1"], deepwell.wells_by_name()["B10"])
+    p10.transfer(5, plate_12w.wells_by_name()["E11"], deepwell.wells_by_name()["B11"])
+    p10.transfer(5, plate_12w.wells_by_name()["C11"], deepwell.wells_by_name()["B12"])
+    p10.transfer(5, plate_12w.wells_by_name()["E9"], deepwell.wells_by_name()["C1"])
+    p10.transfer(5, plate_12w.wells_by_name()["G12"], deepwell.wells_by_name()["C2"])
+
+
+
