@@ -20,7 +20,7 @@ def run(protocol_context):
     plate_23w = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '7')
 
     # instrument setup
-    p10 = protocol_context.load_instrument('p10_single', 'left', tip_racks=tiprack_10ul)
+    p10 = protocol_context.load_instrument('p10_single', 'left', tip_racks=[tiprack_10ul])
 
     # Do transfers
     p10.transfer(5, plate_20w.wells_by_name()["F1"], deepwell.wells_by_name()["B9"])
