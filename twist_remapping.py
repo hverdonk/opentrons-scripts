@@ -1,6 +1,7 @@
 import json
 
-json1_file = open('mpneumonia.json', 'r')
+# change as necessary for different distros
+json1_file = open('mgenitalium.json', 'r')
 json1_str = json1_file.read()
 json1_data = json.loads(json1_str)
 json1_file.close()
@@ -16,9 +17,11 @@ json1_data['M.genitalium_1']
 # Uncomment to find new plate names.
 # print(json1_data.keys())
 
-new_plate = 'M.pneumonia_1'
+new_plate = 'M.genitalium_0'
 
 # Uncomment to find old plate names, and how many there are.
+# Could theoretically exceed what can fit on the deck, but in practice doesn't actually happen
+# Nvm, it happened
 # print("Number of old plates: {}".format(len(json1_data[new_plate])))
 # for plate in json1_data[new_plate]:
 #     print(plate)
@@ -26,6 +29,8 @@ new_plate = 'M.pneumonia_1'
 # Uncomment to calculate # of tips used (aka number of move operations)
 # Find the number of dicts per old plate. Each dict is a move, and each move
 # requires a new tip to avoid contamination.
+# Keoni has provided me with data that will ALWAYS be 96 tips or fewer, since
+# that's the most tips it could require to fill one plate. SO, no need to run this.
 
 # moves = 0
 # for plate in json1_data[new_plate]:
