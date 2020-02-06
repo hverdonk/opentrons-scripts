@@ -17,7 +17,7 @@ json1_data['M.genitalium_1']
 # Uncomment to find new plate names.
 # print(json1_data.keys())
 
-new_plate = 'M.genitalium_0'
+new_plate = 'M.genitalium_1'
 
 # Uncomment to find old plate names, and how many there are.
 # Could theoretically exceed what can fit on the deck, but in practice doesn't actually happen
