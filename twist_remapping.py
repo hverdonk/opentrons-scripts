@@ -10,13 +10,13 @@ Keeping these notes for later code improvements.
 
 json1_data is a list of dicts. Each dict has key = old plate name, value = list of dicts 
 governing moves to make.
-json1_data['M.gentalium_1']
+json1_data['M.genitalium_1']
 '''
 
 # Uncomment to find new plate names.
 # print(json1_data.keys())
 
-new_plate = 'M.pneumonia_0'
+new_plate = 'M.pneumonia_1'
 
 # Uncomment to find old plate names, and how many there are.
 # print("Number of old plates: {}".format(len(json1_data[new_plate])))
@@ -51,4 +51,3 @@ for p in json1_data[new_plate]:
                   + "\"])" + "\n"
         t.write(command)
 t.close()
-
