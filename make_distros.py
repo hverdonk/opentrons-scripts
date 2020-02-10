@@ -3,9 +3,9 @@ from opentrons import protocol_api,labware, instruments
 # metadata
 metadata = {
     'apiLevel': '2.1',
-    'protocolName': 'Distribute Cultures',
+    'protocolName': 'make_distros',
     'author': 'Hannah Verdonk <hverdonk@stanford.edu>',
-    'description': 'Another simple protocol to get started using OT2',
+    'description': 'Create new stock for a FreeGenes distribution',
 }
 
 
