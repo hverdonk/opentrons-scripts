@@ -29,12 +29,11 @@ def run(protocol_context):
 
     plate_list = [plate1, plate2, plate3, plate4, plate5, plate6, plate7, plate8, plate9]
 
-    # Distribute volume from deep well plate to flat bottom plates, column by column
-    # Only officially take from well 0 in the column, because the multichannel will reach the rest anyway
-
     # Move right to left (i.e., reverse the list) to avoid contaminating virgin wells
     master_plate = deepwell.columns_by_name()[::-1]
 
+    # Distribute volume from deep well plate to flat bottom plates, column by column
+    # Only officially take from well 0 in the column, because the multichannel will reach the rest anyway
     for col in master_plate:
         p300.distribute(45, master_plate.columns_by_name()[col][0],
                            [plate.columns_by_name()[col][0] for plate in plate_list])
