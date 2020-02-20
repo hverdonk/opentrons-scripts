@@ -1,7 +1,7 @@
 import json
 
 # change as necessary for different distros
-json1_file = open('bsubtilis.json', 'r')
+json1_file = open('mflorum.json', 'r')
 json1_str = json1_file.read()
 json1_data = json.loads(json1_str)
 json1_file.close()
@@ -18,10 +18,11 @@ json1_data['M.genitalium_1']
 # print("New Plate Names: ")
 # print(json1_data.keys())
 
-new_plate = 'B.subtilis_2'
+new_plate = 'M.florum_5'
 
 # Uncomment to find old plate names, and how many there are.
-# Could theoretically exceed what can fit on the deck, but in practice doesn't actually happen
+# Could theoretically exceed what can fit on the deck (max 9 plates fit in addition to tips/deepwell),
+# but in practice doesn't actually happen
 # Nvm, it happened
 # print("Number of old plates: {}".format(len(json1_data[new_plate])))
 # for plate in json1_data[new_plate]:
