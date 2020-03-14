@@ -1,3 +1,12 @@
+"""
+Required: set up the PCD dilution series before running this protocol.
+Tube with highest concentration of Positive Control Template (RED) goes in B1
+of the temp deck. Tube with second highest concentration goes in B2, etc.
+
+
+"""
+
+
 from opentrons import protocol_api,labware, instruments
 
 metadata = {
@@ -9,23 +18,25 @@ metadata = {
 def run(protocol):
 
     # Deck Setup #
-    # Samples (all in column 12) - the extracted RNA from the last step
+    # Samples (all in column 12) - the extracted RNA from Station B
     elution_plate = protocol.load_labware('nest_96_wellplate_100ul_pcr_full_skirt', '9')
     
-    # Reaction plate
-    # the final destination for all this stuff
+    # Reaction plate - the plate returned by this protocol
     reaction_plate = protocol.load_labware('nest_96_wellplate_100ul_pcr_full_skirt', '8')
     
     # Temp deck
-    # where all the reagents we're adding live. Must be cold
     temp_module = protocol.load_module('Temperature Module', '7')
+    temp_module.set_temperature(25)   # for testing
+    # temp_module.set_temperature(4)   # for the real run
+
+    # Cold Reagents
     cold_reagents = temp_module.load_labware('opentrons_24_aluminumblock_generic_2ml_screwcap',
                                      label='Temperature-Controlled Tubes')
-    # TODO: set temp module temperature to something like 4C
     reaction_mix = cold_reagents['A1']
     endogenous_control_mix = cold_reagents['A2']
     water = cold_reagents['A3']
-    pcd_dilution = [cold_reagents['B{}'.format(x)] for x in range(1, 7)]   # cols 1-6
+    std_template = cold_reagents['A4']
+    pcd_dilution = [cold_reagents['B{}'.format(x)] for x in range(1, 7)]
 
     # Set up pipette 
     tips20 = [protocol.load_labware('opentrons_96_filtertiprack_20ul', str(x)) for x in range(10, 13)]
@@ -40,10 +51,11 @@ def run(protocol):
     p20.distribute(15, endogenous_control_mix, reaction_plate.columns_by_name()['1'], new_tip='always')
 
     # Place samples in wells
+    # TODO: ensure that last row gets proper control RNA/control RNA2 when taking from elution plate
     [p20.transfer(5, elution_plate.columns_by_name()['12'], col, new_tip='always')
         for col in [reaction_plate.columns_by_name()[str(x)] for x in range(1, 4)]]
 
-    # Place controls in wells for PCD dilution curve
+    # Place controls in wells for PCD dilution curve (THIS is the standard template?)
     ctrl_col = [reaction_plate.columns_by_name()[str(x)] for x in range(4, 7)]
     [[p20.transfer(5, pcd_dilution[num], col[num], new_tip='always') for col in ctrl_col] for num in range(0, 5)]
 
