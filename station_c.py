@@ -33,15 +33,13 @@ def run(protocol):
 
     # Protocol Run #
     # Set up reactions
-    # put reaction mix into reaction mix cols, standard curve cols
     [p20.distribute(15, reaction_mix, col, new_tip='always')
-        for col in [reaction_plate.columns_by_name()[str(x)] for x in [2, 3, 4, 5, 6]]]
+        for col in [reaction_plate.columns_by_name()[str(x)] for x in [2, 3, 4]]]
 
     # Set up Endogenous controls
     p20.distribute(15, endogenous_control_mix, reaction_plate.columns_by_name()['1'], new_tip='always')
 
-    # Place samples in wells (this is the RNA template)
-    # TODO: double check that elution plate -> reaction plate well assignment is correct, check ranges
+    # Place samples in wells
     [p20.transfer(5, elution_plate.columns_by_name()['12'], col, new_tip='always')
         for col in [reaction_plate.columns_by_name()[str(x)] for x in range(1, 4)]]
 
