@@ -3,11 +3,10 @@ Required: set up the PCD dilution series before running this protocol.
 Tube with highest concentration of Positive Control Template (RED) goes in B1
 of the temp deck. Tube with second highest concentration goes in B2, etc.
 
-
+By hand, add 5uL control RNA to H1, G4, H4, G5, and H5. Add 2.5uL control RNA 2 to H2 and H3.
 """
 
-
-from opentrons import protocol_api,labware, instruments
+from opentrons import protocol_api, labware, instruments
 
 metadata = {
     'author': 'Chaz <chaz@opentrons.com',
@@ -26,7 +25,7 @@ def run(protocol):
     
     # Temp deck
     temp_module = protocol.load_module('Temperature Module', '7')
-    temp_module.set_temperature(25)   # for testing
+    temp_module.set_temperature(20)   # for testing
     # temp_module.set_temperature(4)   # for the real run
 
     # Cold Reagents
@@ -39,7 +38,7 @@ def run(protocol):
     pcd_dilution = [cold_reagents['B{}'.format(x)] for x in range(1, 7)]
 
     # Set up pipette 
-    tips20 = [protocol.load_labware('opentrons_96_filtertiprack_20ul', str(x)) for x in range(10, 13)]
+    tips20 = protocol.load_labware('opentrons_96_filtertiprack_20ul', 4)
     p20 = protocol.load_instrument('p20_single_gen2', 'right', tip_racks=tips20)
 
     # Protocol Run #
@@ -51,14 +50,12 @@ def run(protocol):
     p20.distribute(15, endogenous_control_mix, reaction_plate.columns_by_name()['1'], new_tip='always')
 
     # Place samples in wells
-    # TODO: ensure that last row gets proper control RNA/control RNA2 when taking from elution plate
-    [p20.transfer(5, elution_plate.columns_by_name()['12'], col, new_tip='always')
-        for col in [reaction_plate.columns_by_name()[str(x)] for x in range(1, 4)]]
+    sample_col = [reaction_plate.columns_by_name()[str(x)] for x in range(1, 4)]
+    [p20.transfer(5, elution_plate.columns_by_name()['12'], col, new_tip='always') for col in sample_col]
 
     # Place controls in wells for PCD dilution curve (THIS is the standard template?)
     ctrl_col = [reaction_plate.columns_by_name()[str(x)] for x in range(4, 7)]
-    [[p20.transfer(5, pcd_dilution[num], col[num], new_tip='always') for col in ctrl_col] for num in range(0, 5)]
+    [[p20.transfer(5, pcd_dilution[num], col[num], new_tip='always') for col in ctrl_col] for num in range(0, 6)]
 
     # put water in bottom two wells for all PCD dilution cols
-    # TODO: should be changed to just last col? Other cols have control RNA
-    [[p20.transfer(5, water, col[num], new_tip='always') for col in ctrl_col] for num in range(6, 8)]
+    [p20.transfer(5, water, reaction_plate.columns_by_name()['6'][num], new_tip='always') for num in range(6, 8)]
