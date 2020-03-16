@@ -1,4 +1,4 @@
-from opentrons import protocol_api,labware, instruments
+from opentrons import protocol_api, labware, instruments
 
 # metadata
 metadata = {
