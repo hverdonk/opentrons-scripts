@@ -30,8 +30,14 @@ def run(protocol_context):
 
 
     # Pipette Setup
-    p10 = protocol_context.load_instrument('p10_single', 'left', tip_racks=[p10rack])
+    p10 = protocol_context.load_instrument('p10_single', 'right', tip_racks=[p10rack])
+
+    # Blow out liquid at 100,000 uL/s. Ideally, speed increased from default to prevent drips/
+    # trapping extra volume in pipette. Actually has no effect on water, but I leave it here to show I tried.
+    p10.flow_rate.blow_out = 100000
+
+
 
     # Instructions
-    for dest_well in destinations:
-        p10.transfer(5, source, dest_well)
+
+    p10.distribute(5, source.bottom(), destinations)
