@@ -11,7 +11,7 @@ metadata = {
 
 def run(protocol_context):
     # Labware Setup
-    p300rack = protocol_context.load_labware('opentrons_96_tiprack_300ul', '11')
+    p300rack = protocol_context.load_labware('opentrons_96_filtertiprack_200ul', '11')
     tuberack1 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '1')
     tuberack2 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '2')
     tuberack3 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '3')
