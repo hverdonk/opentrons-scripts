@@ -12,7 +12,7 @@ metadata = {
 
 def run(protocol_context):
     # Labware Setup
-    p300rack = protocol_context.load_labware('opentrons_96_tiprack_300ul', '11')
+    p300rack = protocol_context.load_labware('opentrons_96_filtertiprack_200ul', '11')
     plate1 = protocol_context.load_labware("usascientific_96_wellplate_2.4ml_deep", '4')
     plate2 = protocol_context.load_labware("usascientific_96_wellplate_2.4ml_deep", '5')
     #plate3 = protocol_context.load_labware("usascientific_96_wellplate_2.4ml_deep", '6')

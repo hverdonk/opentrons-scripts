@@ -12,7 +12,7 @@ metadata = {
 def run(protocol_context):
     # Labware Setup
     master_plate = protocol_context.load_labware("usascientific_96_wellplate_2.4ml_deep", '11')
-    p300rack = protocol_context.load_labware('opentrons_96_tiprack_300ul', '10')
+    p300rack = protocol_context.load_labware('opentrons_96_filtertiprack_200ul', '10')
     plate1 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '1')
     plate2 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '2')
     plate3 = protocol_context.load_labware("corning_96_wellplate_360ul_flat", '3')
@@ -37,4 +37,4 @@ def run(protocol_context):
     left = -1
     for col in range(right, left, -1):
         p50.distribute(45, master_plate.columns()[col][0],
-                           [plate.columns()[col][0] for plate in plate_list])
+                           [plate.columns()[col][0] for plate in plate_list], blow_out=False)
