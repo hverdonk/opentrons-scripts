@@ -1,4 +1,4 @@
-from opentrons import protocol_api,labware, instruments
+from opentrons import protocol_api, labware, instruments
 
 # metadata
 metadata = {
@@ -40,4 +40,4 @@ def run(protocol_context):
 
     # Instructions
 
-    p300.distribute(15, source.bottom(), destinations)
+    p300.distribute(15, source.bottom(), destinations, disposal_volume=10)
