@@ -11,7 +11,7 @@ metadata = {
 
 def run(protocol_context):
     # Labware Setup
-    p300rack = protocol_context.load_labware('opentrons_96_filtertiprack_200ul', '11')
+    p50rack = protocol_context.load_labware('opentrons_96_filtertiprack_200ul', '11')
     tuberack1 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '1')
     tuberack2 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '2')
     tuberack3 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '3')
@@ -28,12 +28,12 @@ def run(protocol_context):
         tuberack6.wells() + tuberack7.wells() + tuberack8.wells() + tuberack9.wells() + tuberack10.wells()[1:]
 
     # Pipette Setup
-    p300 = protocol_context.load_instrument('p300_single', 'right', tip_racks=[p300rack])
+    p50 = protocol_context.load_instrument('p300_single', 'right', tip_racks=[p50rack])
 
     # Blow out liquid at 100,000 uL/s. Ideally, speed increased from default to prevent drips/
     # trapping extra volume in pipette. Actually has no effect on water, but I leave it here to show I tried.
-    p300.flow_rate.blow_out = 100000
+    p50.flow_rate.blow_out = 100000
 
     # Instructions
 
-    p300.distribute(15, source.bottom(), destinations, disposal_volume=10)
+    p50.distribute(15, source.bottom(), destinations, disposal_volume=10)
