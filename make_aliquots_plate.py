@@ -12,8 +12,8 @@ metadata = {
 def run(protocol_context):
     # Labware Setup
     p50rack = protocol_context.load_labware('opentrons_96_filtertiprack_200ul', '11')
-    rack1 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '10')
-    rack2 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '7')
+    rack1 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '7')
+    rack2 = protocol_context.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", '10')
     plate1 = protocol_context.load_labware("biorad_96_wellplate_200ul_pcr", '1')
     plate2 = protocol_context.load_labware("biorad_96_wellplate_200ul_pcr", '2')
     plate3 = protocol_context.load_labware("biorad_96_wellplate_200ul_pcr", '3')
@@ -98,7 +98,7 @@ def run(protocol_context):
     p50.flow_rate.blow_out = 100000
 
     # Instructions
-    for loc in tube_to_well_map:
-        source = loc.value()
-        destinations = [p[loc.key()] for p in plates]
+    for source in tube_to_well_map:
+        dest_well = tube_to_well_map[source]
+        destinations = [p[dest_well] for p in plates]
         p50.distribute(5, source, destinations, touch_tip=True, disposal_volume=5)
