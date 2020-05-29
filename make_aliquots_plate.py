@@ -2,7 +2,7 @@ from opentrons import protocol_api, labware, instruments
 
 # metadata
 metadata = {
-    'apiLevel': '2.2',
+    'apiLevel': '2.3',
     'protocolName': 'Make Plate Aliquots',
     'author': 'Hannah Verdonk <hverdonk@stanford.edu>',
     'description': 'Distribute plasmids to PCR plates for shipping.',
@@ -29,7 +29,7 @@ def run(protocol_context):
     # (E.g., A1, A2... B1, B2...)
     # Key = destination well in PCR plate, Value = source tube in tube rack. E.g., rack1[A1] has the plasmid aliquot
     # for the A1 wells in all the PCR plates.
-    # A3, A4, B6, and H3 do not have content. TUBES A8, B8, C6, E5, & E11 WERE MANUALLY ALIQUOTTED due to low source
+    # A3, A4, B6, and H3 do not have content. TUBES A8, B8, C4, C6, E5, & E11 WERE MANUALLY ALIQUOTTED due to low source
     # volume and lack of space on the OT2.
     tube_to_well_map = {'A1': rack1['A1'],
                         'A2': rack1['A2'],
@@ -57,7 +57,7 @@ def run(protocol_context):
                         'C1': rack1['D2'],
                         'C2': rack1['D3'],
                         'C3': rack1['D4'],
-                        'C4': rack1['D5'],
+
                         'C5': rack1['D6'],
 
                         'C7': rack2['A1'],
