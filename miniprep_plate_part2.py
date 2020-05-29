@@ -19,8 +19,9 @@ def run(protocol: protocol_api.ProtocolContext):
     tips6 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '10')
     tips7 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '11')
 
-    endo_wash = protocol.load_labware("agilent_1_reservoir_290ml", '2')
-    zyppy_wash = protocol.load_labware("agilent_1_reservoir_290ml", '3')
+    zyppy_wash = protocol.load_labware("agilent_1_reservoir_290ml", '2')
+    endo_wash = protocol.load_labware("agilent_1_reservoir_290ml", '3')
+    liquid_waste = protocol.load_labware("agilent_1_reservoir_290ml", '4')
 
     magdeck = protocol.load_module('Magnetic Module', '1')
     collection_plate = magdeck.load_labware("usascientific_96_wellplate_2.4ml_deep", label='collection plate')
@@ -40,7 +41,8 @@ def run(protocol: protocol_api.ProtocolContext):
         while i > 0:
             p300.move_to(col[0].top(-30))
             p300.aspirate(200)
-            # dispense into trash
+            p300.move_to(liquid_waste.wells_by_name()['A1'])
+            p300.dispense(200)
             i -= 1
         p300.drop_tip()
 
@@ -58,7 +60,8 @@ def run(protocol: protocol_api.ProtocolContext):
         p300.pick_up_tip()
         p300.move_to(col[0].top(-30))
         p300.aspirate(200)
-        # move to trash & dispense into trash
+        p300.move_to(liquid_waste.wells_by_name()['A1'])
+        p300.dispense(200)
         p300.drop_tip()
 
 
@@ -72,7 +75,7 @@ def run(protocol: protocol_api.ProtocolContext):
             while i > 0:
                 p300.move_to(zyppy_wash.wells_by_name()['A1'])
                 p300.aspirate(200)
-                p300.move_to(col[0])
+                p300.move_to(col[0].top())
                 p300.dispense(200)
                 i -= 1
             p300.mix(2)
@@ -84,7 +87,8 @@ def run(protocol: protocol_api.ProtocolContext):
             while i > 0:
                 p300.move_to(col[0].top(-30))
                 p300.aspirate(200)
-                # move to trash & dispense
+                p300.move_to(liquid_waste.wells_by_name()['A1'])
+                p300.dispense(200)
                 i -= 1
             p300.drop_tip()
         washes_left -= 1
