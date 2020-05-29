@@ -11,22 +11,23 @@ metadata = {
 
 def run(protocol: protocol_api.ProtocolContext):
     # Labware Setup
-    tips1 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '5')
-    tips2 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '6')
-    tips3 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '7')
-    tips4 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '8')
-    tips5 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '9')
-    tips6 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '10')
-    tips7 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '11')
+    tips1 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '11')
+    tips2 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '10')
+    tips3 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '9')
+    tips4
+    tips5
+    tips6
 
     endo_wash = protocol.load_labware("agilent_1_reservoir_290ml", '2')
     zyppy_wash = protocol.load_labware("agilent_1_reservoir_290ml", '2')
+    elution_buffer = protocol.load_labware("agilent_1_reservoir_290ml", '2')
 
     magdeck = protocol.load_module('Magnetic Module', '1')
     collection_plate = magdeck.load_labware("usascientific_96_wellplate_2.4ml_deep", label='collection plate')
+    elution_plate = protocol.load_labware("biorad_96_wellplate_200ul_pcr", '9')
 
     # Pipette Setup
-    p300 = protocol.load_instrument('p300_multi', 'left', tip_racks=[tips1, tips2, tips3, tips4, tips5, tips6, tips7])
+    p300 = protocol.load_instrument('p300_multi', 'left', tip_racks=[tips1, tips2, tips3])
 
     # BEGIN PROTOCOL
     # Pause 5 min for magdeck to pellet the magbeads
@@ -89,4 +90,8 @@ def run(protocol: protocol_api.ProtocolContext):
             p300.drop_tip()
         washes_left -= 1
 
-    protocol.comment('Let the collection plate dry at room temperature for 30 minutes before beginning Part 3.')
+    # air dry pellets (30 mins)
+
+    # Add Elution Buffer & incubate
+
+
