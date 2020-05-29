@@ -3,7 +3,7 @@ from opentrons import protocol_api
 # metadata
 metadata = {
     'apiLevel': '2.2',
-    'protocolName': 'Miniprep Plate Part 2',
+    'protocolName': 'Miniprep Plate Part 3',
     'author': 'Hannah Verdonk <hverdonk@stanford.edu>',
     'description': 'Automates the Zymo kit "Zyppy-96 Plasmid MagBead Miniprep".',
 }
@@ -14,84 +14,51 @@ def run(protocol: protocol_api.ProtocolContext):
     tips1 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '11')
     tips2 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '10')
     tips3 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '9')
-    tips4
-    tips5
-    tips6
 
-    endo_wash = protocol.load_labware("agilent_1_reservoir_290ml", '2')
-    zyppy_wash = protocol.load_labware("agilent_1_reservoir_290ml", '2')
     elution_buffer = protocol.load_labware("agilent_1_reservoir_290ml", '2')
+    elution_plate = protocol.load_labware("biorad_96_wellplate_200ul_pcr", '5')
 
+    # Part way through the protocol, the collection plate must be moved by hand from the temp deck to the mag deck.
+    # The plates loaded onto both modules represent the same plate in real life.
     magdeck = protocol.load_module('Magnetic Module', '1')
-    collection_plate = magdeck.load_labware("usascientific_96_wellplate_2.4ml_deep", label='collection plate')
-    elution_plate = protocol.load_labware("biorad_96_wellplate_200ul_pcr", '9')
+    collection_plate = magdeck.load_labware("usascientific_96_wellplate_2.4ml_deep", label='same collection plate')
+
+    tempdeck = protocol.load_module('Temperature Module', '4')
+    c_plate_2 = magdeck.load_labware("usascientific_96_wellplate_2.4ml_deep", label='collection plate')
 
     # Pipette Setup
     p300 = protocol.load_instrument('p300_multi', 'left', tip_racks=[tips1, tips2, tips3])
 
     # BEGIN PROTOCOL
-    # Pause 5 min for magdeck to pellet the magbeads
-    magdeck.engage()
+    # Check that collection plate is on top of tempdeck prior to start.
+    protocol.pause()
+    protocol.comment("Is the collection plate on the temp deck?")
+
+    # Set tempdeck to 65C
+    tempdeck.set_temperature(65)
+
+    # Add Elution Buffer & incubate on tempdeck for 5 mins
+    for col in c_plate_2.columns():
+        p300.transfer(40,
+                      elution_buffer.wells_by_name()['A1'],
+                      col[0],
+                      mix_after=(3, 35),
+                      new_tip='always')
     protocol.delay(minutes=5)
 
-    # Aspirate and discard cleared lysates. # TODO: Double check volume math on this one.
-    for col in collection_plate.columns():
-        p300.pick_up_tip()
-        i = 3
-        while i > 0:
-            p300.move_to(col[0].top(-30))
-            p300.aspirate(200)
-            # dispense into trash
-            i -= 1
-        p300.drop_tip()
+    # Physically move the collection plate back onto the magdeck
+    protocol.pause()
+    protocol.comment("Move the collection plate onto the magdeck, then continue.")
 
-    # Endo Wash
-    magdeck.disengage()
-    for col in collection_plate.columns():
-        p300.transfer(200,
-                      endo_wash.wells_by_name()['A1'],
-                      col[0],
-                      mix_after=(3, 200),
-                      new_tip='always')
+    # Let magdeck work its magic for 1 min.
     magdeck.engage()
-    protocol.delay(minutes=2)
-    for col in collection_plate.columns():
+    protocol.delay(minutes=1)
+
+    # Transfer eluted DNA to elution plate
+    for col in collection_plate.columns_by_name():
         p300.pick_up_tip()
-        p300.move_to(col[0].top(-30))
-        p300.aspirate(200)
-        # move to trash & dispense into trash
+        p300.move_to(collection_plate.columns_by_name()[col][0].top(-40))
+        p300.aspirate(30)
+        p300.move_to(elution_plate.columns_by_name()[col][0])
+        p300.dispense(30)
         p300.drop_tip()
-
-
-    # Zyppy Wash 1 & 2
-    washes_left = 2
-    while washes_left > 0:
-        magdeck.disengage()
-        for col in collection_plate.columns():
-            i = 2
-            p300.pick_up_tip()
-            while i > 0:
-                p300.move_to(zyppy_wash.wells_by_name()['A1'])
-                p300.aspirate(200)
-                p300.move_to(col[0])
-                p300.dispense(200)
-                i -= 1
-            p300.mix(2)
-            p300.drop_tip()
-        magdeck.engage()
-        protocol.delay(minutes=2)
-        for col in collection_plate.columns():
-            p300.pick_up_tip()
-            while i > 0:
-                p300.move_to(col[0].top(-30))
-                p300.aspirate(200)
-                # move to trash & dispense
-                i -= 1
-            p300.drop_tip()
-        washes_left -= 1
-
-    # air dry pellets (30 mins)
-
-    # Add Elution Buffer & incubate
-
-

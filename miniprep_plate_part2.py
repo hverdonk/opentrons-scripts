@@ -20,7 +20,7 @@ def run(protocol: protocol_api.ProtocolContext):
     tips7 = protocol.load_labware('opentrons_96_filtertiprack_200ul', '11')
 
     endo_wash = protocol.load_labware("agilent_1_reservoir_290ml", '2')
-    zyppy_wash = protocol.load_labware("agilent_1_reservoir_290ml", '2')
+    zyppy_wash = protocol.load_labware("agilent_1_reservoir_290ml", '3')
 
     magdeck = protocol.load_module('Magnetic Module', '1')
     collection_plate = magdeck.load_labware("usascientific_96_wellplate_2.4ml_deep", label='collection plate')
