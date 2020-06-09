@@ -28,7 +28,7 @@ def run(protocol_context):
         tuberack6.wells() + tuberack7.wells() + tuberack8.wells() + tuberack9.wells() + tuberack10.wells()[1:]
 
     # Pipette Setup
-    p50 = protocol_context.load_instrument('p300_single', 'right', tip_racks=[p50rack])
+    p50 = protocol_context.load_instrument('p50_single', 'right', tip_racks=[p50rack])
 
     # Blow out liquid at 100,000 uL/s. Ideally, speed increased from default to prevent drips/
     # trapping extra volume in pipette. Actually has no effect on water, but I leave it here to show I tried.
