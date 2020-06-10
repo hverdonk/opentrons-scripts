@@ -31,8 +31,7 @@ def run(protocol: protocol_api.ProtocolContext):
 
     # BEGIN PROTOCOL
     # Check that collection plate is on top of tempdeck prior to start.
-    protocol.pause()
-    protocol.comment("Is the collection plate on the temp deck?")
+    protocol.pause("Is the collection plate on the temp deck?")
 
     # Set tempdeck to 65C
     tempdeck.set_temperature(65)
@@ -47,8 +46,7 @@ def run(protocol: protocol_api.ProtocolContext):
     protocol.delay(minutes=5)
 
     # Physically move the collection plate back onto the magdeck
-    protocol.pause()
-    protocol.comment("Move the collection plate onto the magdeck, then continue.")
+    protocol.pause("Move the collection plate onto the magdeck, then continue.")
 
     # Let magdeck work its magic for 1 min.
     magdeck.engage()

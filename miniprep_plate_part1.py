@@ -110,4 +110,4 @@ def run(protocol: protocol_api.ProtocolContext):
                       mix_after=(3, 200),
                       new_tip='always')
 
-    protocol.comment('Incubate the collection plate at room temperature for 10 minutes before beginning Part 2.')
+    protocol.pause('Incubate the collection plate at room temperature for 10 minutes before beginning Part 2.')

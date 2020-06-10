@@ -64,7 +64,6 @@ def run(protocol: protocol_api.ProtocolContext):
         p300.dispense(200)
         p300.drop_tip()
 
-
     # Zyppy Wash 1 & 2
     washes_left = 2
     while washes_left > 0:
@@ -93,4 +92,4 @@ def run(protocol: protocol_api.ProtocolContext):
             p300.drop_tip()
         washes_left -= 1
 
-    protocol.comment('Let the collection plate dry at room temperature for 30 minutes before beginning Part 3.')
+    protocol.pause('Let the collection plate dry at room temperature for 30 minutes before beginning Part 3.')
