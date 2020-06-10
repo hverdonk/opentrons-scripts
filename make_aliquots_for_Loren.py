@@ -5,7 +5,7 @@ metadata = {
     'apiLevel': '2.3',
     'protocolName': 'Make Plate Aliquots',
     'author': 'Hannah Verdonk <hverdonk@stanford.edu>',
-    'description': 'Resuspend specific wells of lyophilized DNA from Twist Biosciences.',
+    'description': 'Distribute plasmid DNA aliquots to a PCR plate for shipping.',
 }
 
 

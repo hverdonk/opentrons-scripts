@@ -5,7 +5,7 @@ metadata = {
     'apiLevel': '2.3',
     'protocolName': 'Resuspend Twist DNA',
     'author': 'Hannah Verdonk <hverdonk@stanford.edu>',
-    'description': 'Distribute plasmids to PCR plates for shipping.',
+    'description': 'Resuspend specific wells of lyophilized DNA from Twist Biosciences.',
 }
 
 
